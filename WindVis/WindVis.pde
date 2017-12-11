@@ -42,27 +42,36 @@ void draw() {
 }
 
 void drawParticles(){
-  stroke(color(255, 0, 0));
-  strokeWeight(4);
+  strokeWeight(5);
+  textAlign(CENTER, CENTER);
+  textSize(80);
   beginShape(POINTS);
   for (Particle p: particles){
+    stroke(color(random(255), random(255), random(255)));
+    text("MERRY CHRISTMAS", width/2, height/2);
     vertex(p.getX(), p.getY());
   }
   endShape();
   
   for (Particle p: particles){
-    p.decreaseLife();
-    float a = p.getX() * uwnd.getColumnCount() / width;
-    float b = p.getY() * uwnd.getRowCount() / height;
-    float newX = readInterp(uwnd, a, b)*0.1+p.getX();
-    float newY = -readInterp(vwnd, a, b)*0.1+p.getY();
-    p.updateLocation(newX, newY);
+    rungeKutta(p);
   }
 }
 
-void rungeKutta(float initial, float di){
-  float k1 = di;
-  float k2 = initial;
+void rungeKutta(Particle p){
+  p.decreaseLife();
+    float a = p.getX() * uwnd.getColumnCount() / width;
+    float b = p.getY() * uwnd.getRowCount() / height;
+    float k1X = readInterp(uwnd, a, b);
+    float k1Y = -readInterp(vwnd, a, b);
+    float k2X = readInterp(uwnd, a+0.1/2*k1X, b+0.1/2*k1Y);
+    float k2Y = -readInterp(vwnd, a+0.1/2*k1X, b+0.1/2*k1Y);
+    float k3X = readInterp(uwnd, a+0.1/2*k2X, b+0.1/2*k2Y);
+    float k3Y = -readInterp(vwnd, a+0.1/2*k2X, b+0.1/2*k2Y);
+    float k4X = readInterp(uwnd, a+0.1*k3X, b+0.1*k3Y);;
+    float k4Y = -readInterp(vwnd, a+0.1*k3X, b+0.1*k3Y);;
+    
+    p.updateLocation(0.1*k4X+p.getX(), 0.1*k4Y+p.getY());
 }
 
 void drawMouseLine() {
