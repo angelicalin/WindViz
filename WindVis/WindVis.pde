@@ -42,13 +42,17 @@ void draw() {
 }
 
 void drawParticles(){
-  strokeWeight(5);
-  textAlign(CENTER, CENTER);
-  textSize(80);
+  strokeWeight(3);
+  stroke(color(176,113,222));
+  //fill(color(random(255), random(255), random(255)));
+  //textAlign(CENTER, CENTER);
+  //textSize(60);
+  
+  //text("MERRY CHRISTMAS", width/2, height/2);
   beginShape(POINTS);
   for (Particle p: particles){
-    stroke(color(random(255), random(255), random(255)));
-    text("MERRY CHRISTMAS", width/2, height/2);
+   // stroke(color(random(255), random(255), random(255)));
+    
     vertex(p.getX(), p.getY());
   }
   endShape();
