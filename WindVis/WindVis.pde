@@ -4,6 +4,7 @@
 // values indicate westward wind.  This is measured
 // in meters per second.
 Table uwnd;
+Float StepSize= 0.2;
 
 // vwnd stores the 'v' component of the wind, which measures the
 // north-south component of the wind.  Positive values indicate
@@ -68,14 +69,14 @@ void rungeKutta(Particle p){
     float b = p.getY() * uwnd.getRowCount() / height;
     float k1X = readInterp(uwnd, a, b);
     float k1Y = -readInterp(vwnd, a, b);
-    float k2X = readInterp(uwnd, a+0.1/2*k1X, b+0.1/2*k1Y);
-    float k2Y = -readInterp(vwnd, a+0.1/2*k1X, b+0.1/2*k1Y);
-    float k3X = readInterp(uwnd, a+0.1/2*k2X, b+0.1/2*k2Y);
-    float k3Y = -readInterp(vwnd, a+0.1/2*k2X, b+0.1/2*k2Y);
-    float k4X = readInterp(uwnd, a+0.1*k3X, b+0.1*k3Y);;
-    float k4Y = -readInterp(vwnd, a+0.1*k3X, b+0.1*k3Y);;
+    float k2X = readInterp(uwnd, a+StepSize/2*k1X, b+StepSize/2*k1Y);
+    float k2Y = -readInterp(vwnd, a+StepSize/2*k1X, b+StepSize/2*k1Y);
+    float k3X = readInterp(uwnd, a+StepSize/2*k2X, b+StepSize/2*k2Y);
+    float k3Y = -readInterp(vwnd, a+StepSize/2*k2X, b+StepSize/2*k2Y);
+    float k4X = readInterp(uwnd, a+StepSize*k3X, b+StepSize*k3Y);;
+    float k4Y = -readInterp(vwnd, a+StepSize*k3X, b+StepSize*k3Y);;
     
-    p.updateLocation(0.1*k4X+p.getX(), 0.1*k4Y+p.getY());
+    p.updateLocation(StepSize*k4X+p.getX(), StepSize*k4Y+p.getY());
 }
 
 void drawMouseLine() {
