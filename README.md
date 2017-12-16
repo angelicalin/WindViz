@@ -1,6 +1,6 @@
 # WindViz
 ## Names
-Haihan Lin and Sarah Pujol
+Haihan Lin and Sarah Pujol :)
 
 ## Parameters
 Particles: 2000 <br />
